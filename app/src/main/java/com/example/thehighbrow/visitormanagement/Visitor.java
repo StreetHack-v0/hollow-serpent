@@ -20,7 +20,7 @@ public class Visitor {
         this.name = name;
         this.contact = contact;
         this.host = host;
-        this.photoUrl= photoUrl;
+        this.photoUrl = photoUrl;
     }
 
 

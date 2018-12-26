@@ -1,27 +1,35 @@
 {
   "project_info": {
-    "project_number": "",
-    "firebase_url": "",
-    "project_id": "",
-    "storage_bucket": ""
+    "project_number": "395113565594",
+    "firebase_url": "https://base-hollow-serpent.firebaseio.com",
+    "project_id": "base-hollow-serpent",
+    "storage_bucket": "base-hollow-serpent.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:982153597640:android:8ab1168862dc9c19",
+        "mobilesdk_app_id": "1:395113565594:android:8ab1168862dc9c19",
         "android_client_info": {
           "package_name": "com.example.thehighbrow.visitormanagement"
         }
       },
       "oauth_client": [
         {
-          "client_id": "982153597640-qb9a48foipg57p7dtbapsm2m4lae4sm7.apps.googleusercontent.com",
+          "client_id": "395113565594-r52mj8uo4ik60knahbvqlu1ddphufv9d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.thehighbrow.visitormanagement",
+            "certificate_hash": "bb38c2b5745c66224c2e40e9ce91575618d651c8"
+          }
+        },
+        {
+          "client_id": "395113565594-t8atfdhhfgc6uo326qenk9q5i187m4sq.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDCt45nyqdN6OC1pSHpqzd67c1nn_BdGOk"
+          "current_key": "AIzaSyAUm_qVtIPPHLqtYEsHFHSyTo0Qq6Lzpeg"
         }
       ],
       "services": {
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "395113565594-t8atfdhhfgc6uo326qenk9q5i187m4sq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
