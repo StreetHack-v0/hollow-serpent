@@ -1,20 +1,21 @@
 package com.example.thehighbrow.visitormanagement;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -64,7 +65,7 @@ public class visitorDetail extends AppCompatActivity {
 
     private void addVisitor()
     {
-        String vname = name.getText().toString().trim();
+        final String vname = name.getText().toString().trim();
         String vcontact = contact.getText().toString().trim();
         String vhost = host.getText().toString().trim();
 
@@ -76,18 +77,27 @@ public class visitorDetail extends AppCompatActivity {
                 SimpleDateFormat sdf=new SimpleDateFormat("hh:mm a");
                 String currentDateTimeString = sdf.format(d);
 
-                String Date = DateFormat.getDateInstance(DateFormat.DATE_FIELD).format(new Date()).toString();
+                String Date = DateFormat.getDateInstance(DateFormat.DATE_FIELD).format(new Date());
                 Log.e("visitorDetail", "addVisitor: TIME = "+currentDateTimeString+"DATE = "+Date);
-            Visitor visitor = new Visitor(vname,vcontact,vhost,photoUrl);
+            Visitor visitor = new Visitor(vname,vcontact,vhost, photoUrl);
 
-
-                databaseVisitor.child(id).setValue(visitor);
-
-
-            Toast.makeText(this, "Visitor Registered", Toast.LENGTH_SHORT).show();
-            Intent intent= new Intent(visitorDetail.this,Welcome.class);
-            intent.putExtra("vname",vname);
-            startActivity(intent);
+             databaseVisitor.child(id).setValue(visitor)
+                        .addOnSuccessListener(this, new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(visitorDetail.this, "Visitor Registered", Toast.LENGTH_SHORT).show();
+                        Intent intent= new Intent(visitorDetail.this,Welcome.class);
+                        intent.putExtra("vname", vname);
+                        startActivity(intent);
+                    }
+                })
+                     .addOnFailureListener(visitorDetail.this, new OnFailureListener() {
+                         @Override
+                         public void onFailure(@NonNull Exception e) {
+                             Toast.makeText(visitorDetail.this, "Something went wrong. Press PROCEED again.",
+                                     Toast.LENGTH_SHORT).show();
+                         }
+                     });
             }
         else
             {

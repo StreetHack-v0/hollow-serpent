@@ -23,6 +23,7 @@ public class adminActivity extends AppCompatActivity {
     RecyclerView.Adapter adapter;
     DatabaseReference databaseVisitor;
     ArrayList<Visitor>visitors;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +32,7 @@ public class adminActivity extends AppCompatActivity {
         databaseVisitor = FirebaseDatabase.getInstance().getReference("visitor");
         recyclerView= findViewById(R.id.recyclerView);
 
-        visitors = new ArrayList<Visitor>();
+        visitors = new ArrayList<>();
 
  //       Visitor visitor = new Visitor("","","","");
   //      visitors.add(visitor);
@@ -68,28 +69,29 @@ public class adminActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        databaseVisitor.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
-                for (DataSnapshot visitorSnapshot : dataSnapshot.getChildren() ){
-                    Visitor visitor = visitorSnapshot.getValue(Visitor.class);
-                    visitors.add(visitor);
-                    adapter.notifyDataSetChanged();
-                    Log.e("MainActivity", "onDataChange: added visitor to visitors");
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(adminActivity.this, "Problem fetching databse", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
+        databaseVisitor.addValueEventListener(refEventListener);
     }
+
+    private ValueEventListener refEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+            clearVisitors();
+            for (DataSnapshot visitorSnapshot : dataSnapshot.getChildren() ){
+                Visitor visitor = visitorSnapshot.getValue(Visitor.class);
+                visitors.add(visitor);
+                adapter.notifyDataSetChanged();
+                Log.e("MainActivity", "onDataChange: added visitor to visitors");
+
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+            Toast.makeText(adminActivity.this, "Problem fetching databse", Toast.LENGTH_SHORT).show();
+
+        }
+    };
 
     @Override
     public void onBackPressed() {
@@ -98,6 +100,19 @@ public class adminActivity extends AppCompatActivity {
         intent.putExtra("Visitor","adminEnd");
         startActivity(intent);
     }
+
+    private void clearVisitors(){
+        visitors.clear();
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onStop() {
+        databaseVisitor.removeEventListener(refEventListener);
+        clearVisitors();
+        super.onStop();
+    }
+
     /*@Override
     protected void onResume() {
         super.onResume();

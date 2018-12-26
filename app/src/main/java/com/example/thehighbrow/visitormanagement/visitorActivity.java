@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -88,7 +89,8 @@ public class visitorActivity extends AppCompatActivity {
             final Uri uri = Uri.parse(path);
 //            Picasso.get().load(uri).into(photo);
             final StorageReference filepath= mStorage.child("photos").child(uri.getLastPathSegment());
-            final StorageTask<UploadTask.TaskSnapshot> taskSnapshotStorageTask = filepath.putFile(uri)
+//            final StorageTask<UploadTask.TaskSnapshot> taskSnapshotStorageTask =
+            /*filepath.putFile(uri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -96,25 +98,25 @@ public class visitorActivity extends AppCompatActivity {
   //                  downloadUrl = mStorage.getDownloadUrl().toString();
                    // downloadUrl = mStorage.child("photos").child(uri.getLastPathSegment()).getDownloadUrl().toString();
 
- //                   downloadUrl = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
+//                    downloadUrl = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
 
                     Toast.makeText(visitorActivity.this, "Photo Captured, please proceed", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(visitorActivity.this, visitorDetail.class);
-                    intent.putExtra("photourl",path);
+                    intent.putExtra("photourl", downloadUrl);
                     startActivity(intent);
 
                 }
-            });
+            });*/
 
 
 
 
 
-           /* final StorageReference ref = mStorage.child("photos").child(uri.getLastPathSegment());
-            UploadTask uploadTask = mStorage.putBytes(idata);
-            uploadTask = ref.putFile(uri);
+           final StorageReference ref = mStorage.child("photos").child(uri.getLastPathSegment());
+//            UploadTask uploadTask = mStorage.putBytes(idata);
+            UploadTask uploadTask = ref.putFile(uri);
 
-            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
                 public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                     if (!task.isSuccessful()) {
@@ -131,12 +133,19 @@ public class visitorActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
+
+
+                    Toast.makeText(visitorActivity.this, "Photo Captured, please proceed", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(visitorActivity.this, visitorDetail.class);
+                    intent.putExtra("photourl", downloadUri.toString());
+                    startActivity(intent);
                     } else {
                         // Handle failures
                         // ...
+                        Log.e("visitorDetail", task.getException().toString());
                     }
                 }
-            });*/
+            });
 
 
 
