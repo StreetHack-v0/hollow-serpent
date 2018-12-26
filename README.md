@@ -3,3 +3,5 @@
 * `adminActivity`: Registration/Unregistration of `refEventListener` on `onStart()` and `onStop()` respectively, to prevent duplication of visitorList data on restart of `adminActivity`
 
 ( Sorry to not include Unit Tests. I was trying to test individual activities with their seperate Test classes but somehow, `AndroidJUnitRunner` dependencies were not working even after being downloaded. AndroidX dependencies brought same results.)
+
+(Please use original `google-services.json` file. I would be closing the Firebase Project for obstructing further use.)
